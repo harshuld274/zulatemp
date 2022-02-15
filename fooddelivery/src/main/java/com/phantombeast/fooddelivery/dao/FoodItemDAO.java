@@ -1,0 +1,175 @@
+package com.phantombeast.fooddelivery.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.phantombeast.fooddelivery.bean.FoodItemBean;
+
+public class FoodItemDAO {
+
+	private Connection cn;
+
+	private static final String INSERT_FOOD_SQL = "Insert into foods (name, price, about, quantity) values (?, ?, ?, ?)";
+	private static final String SELECT_ALL_FOODS_SQL = "Select * from foods";
+	private static final String SELECT_FOOD_BY_ID_SQL = "Select * from foods where id = ?";
+	private static final String SELECT_FOOD_BY_NAME_SQL = "Select * from foods where name = ?";
+	private static final String DELETE_FOOD_BY_ID_SQL = "Delete from foods where id = ?";
+	private static final String UPDATE_FOOD_BY_ID_SQL = "Update foods Set name = ?, price = ?, about = ?, quantity = ? where id = ?";
+
+	public FoodItemDAO(Connection cn) {
+		super();
+		this.cn = cn;
+	}
+
+	public FoodItemBean selectFoodById(int id) {
+		FoodItemBean fb = null;
+
+		PreparedStatement ps;
+		try {
+			ps = cn.prepareStatement(SELECT_FOOD_BY_ID_SQL);
+			ps.setInt(1, id);
+			ResultSet rs = ps.executeQuery();
+
+			while (rs.next()) {
+				fb = new FoodItemBean();
+				fb.setId(id);
+				fb.setName(rs.getString(2));
+				fb.setPrice(rs.getFloat(3));
+				fb.setAbout(rs.getString(4));
+				fb.setQuantity(rs.getInt(5));
+			}
+
+			ps.close();
+			cn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return fb;
+	}
+
+	public FoodItemBean selectFoodByName(String name) {
+		FoodItemBean fb = null;
+
+		PreparedStatement ps;
+		try {
+			ps = cn.prepareStatement(SELECT_FOOD_BY_NAME_SQL);
+			ps.setString(1, name);
+			ResultSet rs = ps.executeQuery();
+
+			while (rs.next()) {
+				fb = new FoodItemBean();
+				fb.setId(rs.getInt(1));
+				fb.setName(rs.getString(2));
+				fb.setPrice(rs.getFloat(3));
+				fb.setAbout(rs.getString(4));
+				fb.setQuantity(rs.getInt(5));
+			}
+
+			ps.close();
+			cn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return fb;
+	}
+
+	public List<FoodItemBean> selectAllFoods() {
+		List<FoodItemBean> foods = new ArrayList<>();
+
+		try {
+			Statement s = cn.createStatement();
+			ResultSet rs = s.executeQuery(SELECT_ALL_FOODS_SQL);
+
+			while (rs.next()) {
+				FoodItemBean fb = new FoodItemBean();
+				fb.setId(rs.getInt(1));
+				fb.setName(rs.getString(2));
+				fb.setPrice(rs.getFloat(3));
+				fb.setAbout(rs.getString(4));
+				fb.setQuantity(rs.getInt(5));
+				foods.add(fb);
+			}
+
+			s.close();
+			cn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return foods;
+	}
+
+	public boolean insertFood(FoodItemBean fb) {
+		boolean success = false;
+
+		PreparedStatement ps;
+		try {
+			ps = cn.prepareStatement(INSERT_FOOD_SQL);
+			ps.setString(1, fb.getName());
+			ps.setFloat(2, fb.getPrice());
+			ps.setString(3, fb.getAbout());
+			ps.setInt(4, fb.getQuantity());
+
+			success = ps.executeUpdate() > 0;
+
+			ps.close();
+			cn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return success;
+	}
+
+	public boolean deleteFood(int id) {
+		boolean success = false;
+
+		PreparedStatement ps;
+		try {
+			ps = cn.prepareStatement(DELETE_FOOD_BY_ID_SQL);
+			ps.setInt(1, id);
+			success = ps.executeUpdate() > 0;
+
+			ps.close();
+			cn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return success;
+	}
+
+	public boolean updateFood(FoodItemBean fb) {
+		boolean success = false;
+
+		PreparedStatement ps;
+		try {
+			ps = cn.prepareStatement(UPDATE_FOOD_BY_ID_SQL);
+			ps.setString(1, fb.getName());
+			ps.setFloat(2, fb.getPrice());
+			ps.setString(3, fb.getAbout());
+			ps.setInt(4, fb.getQuantity());
+			ps.setInt(5, fb.getId());
+			success = ps.executeUpdate() > 0;
+
+			ps.close();
+			cn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return success;
+	}
+
+	public boolean isNewFood(String name) {
+		return selectFoodByName(name) == null;
+	}
+
+}
