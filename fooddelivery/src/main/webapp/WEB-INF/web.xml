@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- This web.xml file is not required when using Servlet 3.0 container, 
 	see implementation details http://jersey.java.net/nonav/documentation/latest/jax-rs.html -->
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee;http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee" version="2.5">
   <display-name>Zula</display-name>
   <welcome-file-list>
     <welcome-file>welcome.jsp</welcome-file>
@@ -26,16 +26,6 @@
     <servlet-name>LoginServlet</servlet-name>
     <url-pattern>/login</url-pattern>
   </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>AdminServlet</display-name>
-    <servlet-name>AdminServlet</servlet-name>
-    <servlet-class>com.phantombeast.fooddelivery.controller.AdminServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>AdminServlet</servlet-name>
-    <url-pattern>/admin</url-pattern>
-  </servlet-mapping>
   <filter>
     <display-name>AdminFilter</display-name>
     <filter-name>AdminFilter</filter-name>
@@ -57,32 +47,15 @@
   </servlet-mapping>
   <servlet>
     <description></description>
-    <display-name>AddItemServlet</display-name>
-    <servlet-name>AddItemServlet</servlet-name>
-    <servlet-class>com.phantombeast.fooddelivery.controller.admin.AddItemServlet</servlet-class>
+    <display-name>AdminServlet</display-name>
+    <servlet-name>AdminServlet</servlet-name>
+    <servlet-class>com.phantombeast.fooddelivery.controller.admin.AdminServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>AddItemServlet</servlet-name>
+    <servlet-name>AdminServlet</servlet-name>
     <url-pattern>/admin/addItem</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>EditItemServlet</display-name>
-    <servlet-name>EditItemServlet</servlet-name>
-    <servlet-class>com.phantombeast.fooddelivery.controller.admin.EditItemServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>EditItemServlet</servlet-name>
     <url-pattern>/admin/editItem</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>DeleteItemServlet</display-name>
-    <servlet-name>DeleteItemServlet</servlet-name>
-    <servlet-class>com.phantombeast.fooddelivery.controller.admin.DeleteItemServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>DeleteItemServlet</servlet-name>
     <url-pattern>/admin/deleteItem</url-pattern>
+<!--     <url-pattern>/admin/*</url-pattern> -->
   </servlet-mapping>
 </web-app>

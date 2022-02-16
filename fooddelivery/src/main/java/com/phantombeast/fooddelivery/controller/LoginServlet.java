@@ -32,7 +32,8 @@ public class LoginServlet extends HttpServlet {
 
 		if (email.equals(adminEmail) && password.equals(adminPassword)) {
 			session.setAttribute("email", "admin");
-			response.sendRedirect("admin/admin.jsp");
+			System.out.println("home");
+			response.sendRedirect("admin/home.jsp");
 		} else {
 			LoginBean lb = new LoginBean(email, password);
 			UserDAO userDAO = new UserDAO(ConnectionProvider.getConnection());
