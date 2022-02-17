@@ -28,7 +28,7 @@
 				</ul>
 				<%
 				String user = (String) session.getAttribute("email");
-				System.out.println("user navbar-" + user);
+// 				System.out.println("user navbar-" + user);
 				if (user == null) {
 				%>
 				<div class="d-flex">

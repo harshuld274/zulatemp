@@ -1,4 +1,4 @@
-package com.phantombeast.fooddelivery.controller;
+package com.phantombeast.fooddelivery.controller.admin;
 
 import java.io.IOException;
 import javax.servlet.Filter;
@@ -12,9 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
- * Servlet Filter implementation class AdminFilter
- */
 public class AdminFilter extends HttpFilter implements Filter {
 
 	private static final long serialVersionUID = 1L;
