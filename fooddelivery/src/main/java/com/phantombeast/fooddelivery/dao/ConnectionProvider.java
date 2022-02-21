@@ -10,7 +10,7 @@ public class ConnectionProvider {
 	private static String password = "GtH0mL,B&";
 	private static String driver = "com.mysql.jdbc.Driver";
 
-	public static Connection getConnection() {
+	public static synchronized Connection getConnection() {
 		Connection connection = null;
 		try {
 			Class.forName(driver);

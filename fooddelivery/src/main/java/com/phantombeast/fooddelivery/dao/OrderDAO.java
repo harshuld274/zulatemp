@@ -8,11 +8,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.simple.JSONObject;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.phantombeast.fooddelivery.bean.CartBean;
 import com.phantombeast.fooddelivery.bean.OrderBean;
 
 public class OrderDAO {
@@ -29,14 +26,14 @@ public class OrderDAO {
 		this.cn = cn;
 	}
 
-	public boolean placeOrder(OrderBean ob) {
+	public boolean placeOrder(OrderBean ob) throws JsonMappingException, JsonProcessingException {
 		boolean success = false;
 
 		PreparedStatement ps;
 		try {
 			ps = cn.prepareStatement(PLACE_ORDER_SQL);
 			ps.setString(1, ob.getEmail());
-			ps.setObject(2, ob.getCart());
+			ps.setObject(2, OrderBean.toJSON(ob.getCart()));
 			ps.setFloat(3, ob.getAmount());
 			ps.setString(4, ob.getAddress());
 			ps.setString(5, ob.getMobile());
@@ -112,7 +109,7 @@ public class OrderDAO {
 				foods.add(ob);
 			}
 
-			s.close();
+			ps.close();
 			cn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -151,7 +148,7 @@ public class OrderDAO {
 
 		return ob;
 	}
-	
+
 	public boolean settleOrderById(int id) {
 		boolean success = false;
 

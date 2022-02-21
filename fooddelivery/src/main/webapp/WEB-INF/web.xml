@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- This web.xml file is not required when using Servlet 3.0 container, 
 	see implementation details http://jersey.java.net/nonav/documentation/latest/jax-rs.html -->
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee;http://xmlns.jcp.org/xml/ns/javaee" version="2.5">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee" version="2.5">
   <display-name>Zula</display-name>
   <welcome-file-list>
     <welcome-file>welcome.jsp</welcome-file>
@@ -53,9 +53,16 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>AdminServlet</servlet-name>
-    <url-pattern>/admin/addItem</url-pattern>
-    <url-pattern>/admin/editItem</url-pattern>
-    <url-pattern>/admin/deleteItem</url-pattern>
-    <url-pattern>/admin/*</url-pattern>
+    <url-pattern>/admin/^((?!home).)*$</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>CartServlet</display-name>
+    <servlet-name>CartServlet</servlet-name>
+    <servlet-class>com.phantombeast.fooddelivery.controller.CartServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CartServlet</servlet-name>
+    <url-pattern>/addToCart</url-pattern>
   </servlet-mapping>
 </web-app>

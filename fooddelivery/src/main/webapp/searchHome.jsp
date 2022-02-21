@@ -11,33 +11,6 @@
 </head>
 <body>
 	<%@include file="components/navbar.jsp"%>
-	<%
-	System.out.println(user + " home");
-	if (user == null) {
-		session.setAttribute("login-fail", "Login to access");
-		response.sendRedirect("login.jsp");
-	}
-	%>
-	<%
-	String fail = (String) session.getAttribute("signup-fail2");
-	System.out.println(fail + " fail - home");
-	if (fail != null) {
-	%>
-	<p><%=fail%></p>
-	<%
-	session.removeAttribute("signup-fail2");
-	}
-	%>
-	<%
-	String fail2 = (String) session.getAttribute("quantity-exceed-fail");
-	System.out.println(fail2 + " fail2 - home");
-	if (fail2 != null) {
-	%>
-	<p><%=fail2%></p>
-	<%
-	session.removeAttribute("quantity-exceed-fail");
-	}
-	%>
 	<br>
 	<div class="container">
 		<div class="row">
@@ -60,14 +33,14 @@
 					<th scope="col">Price</th>
 					<th scope="col">Description</th>
 					<th scope="col">Quantity Available</th>
-					<th scope="col">Order Quantity</th>
-					<th scope="col">Add To Cart</th>
+					<th scope="col">Actions</th>
 				</tr>
 			</thead>
 			<tbody>
 				<%
+				String search = request.getParameter("search");
 				FoodItemDAO foodDAO = new FoodItemDAO(ConnectionProvider.getConnection());
-				List<FoodItemBean> foods = foodDAO.selectAvailableFoods();
+				List<FoodItemBean> foods = foodDAO.selectAvailableFoodsLike(search);
 				int sno = 1;
 				for (FoodItemBean f : foods) {
 				%>
@@ -80,7 +53,7 @@
 							<td><%=f.getPrice()%></td>
 							<td><%=f.getAbout()%></td>
 							<td><%=f.getQuantity()%></td>
-							<td><input type="number" name="quantity" placeholder="Quantity" min="1" required></td>
+							<td><input type="number" name="quantity" placeholder="Quantity"></td>
 
 							<td>
 								<button type="submit" class="btn btn-primary">Add To
@@ -89,10 +62,11 @@
 						</tr>
 					</div>
 				</form>
-
 				<%
 				}
-				%>
+				if (sno == 1) { %>
+					<p>No items available</p>
+				<% }%>
 			</tbody>
 		</table>
 	</div>

@@ -22,6 +22,8 @@
 					<li class="nav-item"><a class="nav-link active"
 						aria-current="page" href="home.jsp">Home</a></li>
 					<li class="nav-item active"><a class="nav-link active"
+						href="my_cart.jsp">My Cart</a></li>
+					<li class="nav-item active"><a class="nav-link active"
 						href="about.jsp">About</a></li>
 					<li class="nav-item active"><a class="nav-link active"
 						href="contact_us.jsp">Contact Us</a></li>

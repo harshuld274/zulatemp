@@ -16,8 +16,10 @@ public class FoodItemDAO {
 
 	private static final String INSERT_FOOD_SQL = "Insert into foods (name, price, about, quantity) values (?, ?, ?, ?)";
 	private static final String SELECT_ALL_FOODS_SQL = "Select * from foods";
+	private static final String SELECT_ALL_AVAILABLE_FOODS_SQL = "Select * from foods where quantity > 0";
 	private static final String SELECT_FOOD_BY_ID_SQL = "Select * from foods where id = ?";
 	private static final String SELECT_FOOD_BY_NAME_SQL = "Select * from foods where name = ?";
+	private static final String SELECT_FOODS_LIKE_SQL = "Select * from foods where name like ? and quantity > 0";
 	private static final String DELETE_FOOD_BY_ID_SQL = "Delete from foods where id = ?";
 	private static final String UPDATE_FOOD_BY_ID_SQL = "Update foods Set name = ?, price = ?, about = ?, quantity = ? where id = ?";
 
@@ -98,6 +100,60 @@ public class FoodItemDAO {
 			}
 
 			s.close();
+			cn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return foods;
+	}
+
+	public List<FoodItemBean> selectAvailableFoods() {
+		List<FoodItemBean> foods = new ArrayList<>();
+
+		try {
+			Statement s = cn.createStatement();
+			ResultSet rs = s.executeQuery(SELECT_ALL_AVAILABLE_FOODS_SQL);
+
+			while (rs.next()) {
+				FoodItemBean fb = new FoodItemBean();
+				fb.setId(rs.getInt(1));
+				fb.setName(rs.getString(2));
+				fb.setPrice(rs.getFloat(3));
+				fb.setAbout(rs.getString(4));
+				fb.setQuantity(rs.getInt(5));
+				foods.add(fb);
+			}
+
+			s.close();
+			cn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return foods;
+	}
+
+	public List<FoodItemBean> selectAvailableFoodsLike(String name) {
+		List<FoodItemBean> foods = new ArrayList<>();
+		PreparedStatement ps;
+
+		try {
+			ps = cn.prepareStatement(SELECT_FOODS_LIKE_SQL);
+			ps.setString(1, "%" + name + "%");
+			ResultSet rs = ps.executeQuery();
+
+			while (rs.next()) {
+				FoodItemBean fb = new FoodItemBean();
+				fb.setId(rs.getInt(1));
+				fb.setName(rs.getString(2));
+				fb.setPrice(rs.getFloat(3));
+				fb.setAbout(rs.getString(4));
+				fb.setQuantity(rs.getInt(5));
+				foods.add(fb);
+			}
+
+			ps.close();
 			cn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
