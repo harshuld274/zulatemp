@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- This web.xml file is not required when using Servlet 3.0 container, 
 	see implementation details http://jersey.java.net/nonav/documentation/latest/jax-rs.html -->
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee" version="2.5">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee;http://xmlns.jcp.org/xml/ns/javaee" version="2.5">
   <display-name>Zula</display-name>
   <welcome-file-list>
     <welcome-file>welcome.jsp</welcome-file>
@@ -64,5 +64,21 @@
   <servlet-mapping>
     <servlet-name>CartServlet</servlet-name>
     <url-pattern>/addToCart</url-pattern>
+    <url-pattern>/deleteFromCart</url-pattern>
+    <url-pattern>/incQuan</url-pattern>
+    <url-pattern>/decQuan</url-pattern>
   </servlet-mapping>
+  <filter>
+    <display-name>UserFilter</display-name>
+    <filter-name>UserFilter</filter-name>
+    <filter-class>com.phantombeast.fooddelivery.controller.UserFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>UserFilter</filter-name>
+    <url-pattern>/home.jsp</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>UserFilter</filter-name>
+    <url-pattern>/my_cart.jsp</url-pattern>
+  </filter-mapping>
 </web-app>

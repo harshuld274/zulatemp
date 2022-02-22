@@ -16,6 +16,7 @@ public class CartDAO {
 	private static final String SELECT_CART_BY_USER_SQL = "Select * from carts where email = ?";
 	private static final String INSERT_INTO_CART_SQL = "Insert into carts (email, food, quantity, price, total) values (?, ?, ?, ?, ?)";
 	private static final String UPDATE_CART_SQL = "Update carts Set quantity = ?, total = ? where food = ? and email = ?";
+	private static final String DELETE_CART_SQL = "Delete from carts where food = ? and email = ?";
 
 	public CartDAO(Connection cn) {
 		super();
@@ -111,6 +112,25 @@ public class CartDAO {
 			ps.setFloat(2, tb.getTotal());
 			ps.setString(3, tb.getFood());
 			ps.setString(4, tb.getEmail());
+			success = ps.executeUpdate() > 0;
+
+			ps.close();
+			cn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return success;
+	}
+
+	public boolean deleteCart(String food, String email) {
+		boolean success = false;
+
+		PreparedStatement ps;
+		try {
+			ps = cn.prepareStatement(DELETE_CART_SQL);
+			ps.setString(1, food);
+			ps.setString(2, email);
 			success = ps.executeUpdate() > 0;
 
 			ps.close();

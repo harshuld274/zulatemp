@@ -2,7 +2,6 @@ package com.phantombeast.fooddelivery.bean;
 
 import com.phantombeast.fooddelivery.dao.ConnectionProvider;
 import com.phantombeast.fooddelivery.dao.FoodItemDAO;
-import com.phantombeast.fooddelivery.dao.UserDAO;
 
 public class FoodItemBean {
 	private int id;
@@ -10,11 +9,11 @@ public class FoodItemBean {
 	private float price;
 	private String about;
 	private int quantity;
-	
+
 	public FoodItemBean() {
 		super();
 	}
-	
+
 	public FoodItemBean(String name, float price, String about, int quantity) {
 		super();
 		this.name = name;
@@ -70,7 +69,7 @@ public class FoodItemBean {
 		if (this.getName().length() == 0) {
 			error = "Name cannot be empty";
 		} else if (!foodDAO.isNewFood(this.getName())) {
-			error = "Food with name already exists";			
+			error = "Food with name already exists";
 		} else if (this.getPrice() < 0) {
 			error = "Price cannot be negative";
 		} else if (this.getAbout().split(" ").length < 3) {
@@ -80,11 +79,11 @@ public class FoodItemBean {
 		}
 		return error;
 	}
-	
+
 	public String updateCheck() {
 		String error = null;
 		FoodItemDAO foodDAO = new FoodItemDAO(ConnectionProvider.getConnection());
-		
+
 		if (this.getName().length() == 0) {
 			error = "Name cannot be empty";
 		} else if (this.getPrice() < 0) {
@@ -102,6 +101,5 @@ public class FoodItemBean {
 		return "FoodItemBean [id=" + id + ", name=" + name + ", price=" + price + ", about=" + about + ", quantity="
 				+ quantity + "]";
 	}
-	
-	
+
 }
