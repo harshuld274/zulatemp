@@ -9,8 +9,24 @@
 </head>
 <body>
 	<%@include file="components/navbar.jsp"%>
-	<br>
-	<%@include file="components/footer.jsp"%>
+	<%
+	String signupSuccess = (String) session.getAttribute("signup-succ");
+	if (signupSuccess != null) {
+	%>
+	<p><%=signupSuccess%></p>
+	<%
+	session.removeAttribute("signup-succ");
+	}
+	%>
+	<%
+	String passSuccess = (String) session.getAttribute("pass-succ");
+	if (passSuccess != null) {
+	%>
+	<p><%=passSuccess%></p>
+	<%
+	session.removeAttribute("pass-succ");
+	}
+	%>
 	Welcome
 </body>
 </html>

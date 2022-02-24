@@ -74,7 +74,7 @@ public class SignupBean {
 		this.mobile = mobile;
 	}
 
-	public String isValid() {
+	public String isSignupValid() {
 		String error = null;
 		UserDAO userDAO = new UserDAO(ConnectionProvider.getConnection());
 
@@ -83,7 +83,7 @@ public class SignupBean {
 		} else if (this.getEmail().length() == 0 || !this.getEmail().matches(".+@.+\\..+")) {
 			error = "Invalid Email";
 		} else if (!userDAO.isNewUser(this.getEmail())) {
-			error = "User with Email already exists";			
+			error = "User with Email already exists";
 		} else if (this.getPassword().length() == 0) {
 			error = "Password cannot be empty";
 		} else if (this.getPassword().length() < 1) {
@@ -107,11 +107,53 @@ public class SignupBean {
 		return error;
 	}
 
+	public String isUpdateValid() {
+		String error = null;
+		UserDAO userDAO = new UserDAO(ConnectionProvider.getConnection());
+
+		if (this.getName().length() == 0) {
+			error = "Name cannot be empty";
+		} else if (this.getAddress().length() == 0) {
+			error = "Address cannot be empty";
+		} else if (this.getMobile().length() == 0) {
+			error = "Mobile Number cannot be empty";
+		} else if (this.getMobile().length() != 10) {
+			error = "Mobile Number must be 10 characters long";
+		} else {
+			try {
+				Long.parseLong(this.getMobile());
+			} catch (NumberFormatException e) {
+				error = "Mobile Number is invalid";
+			}
+		}
+
+		return error;
+	}
+
+	public static String isPasswordUpdateValid(String email, String oldPassword, String newPassword,
+			String newPassword2) {
+		String error = null;
+		UserDAO userDAO = new UserDAO(ConnectionProvider.getConnection());
+		SignupBean sb = userDAO.selectUser(email);
+
+		if (!oldPassword.equals(sb.getPassword())) {
+			error = "Incorrect Old Password";
+		} else if (newPassword.length() == 0) {
+			error = "Password cannot be empty";
+		} else if (newPassword.length() < 4) {
+			error = "Password is too short. Must be atleast 4 characters long";
+		} else if (!newPassword.equals(newPassword2)) {
+			error = "Passwords don't match";
+		} else if (oldPassword.equals(newPassword)) {
+			error = "Choose a different password from your current one";
+		}
+
+		return error;
+	}
+
 	@Override
 	public String toString() {
 		return "SignupBean [name=" + name + ", email=" + email + ", password=" + password + ", password2=" + password2
 				+ ", address=" + address + ", mobile=" + mobile + "]";
 	}
-
-	
 }

@@ -26,6 +26,8 @@
 					<li class="nav-item active"><a class="nav-link active"
 						href="my_orders.jsp">My Orders</a></li>
 					<li class="nav-item active"><a class="nav-link active"
+						href="update_password.jsp">Change Password</a></li>
+					<li class="nav-item active"><a class="nav-link active"
 						href="about.jsp">About</a></li>
 					<li class="nav-item active"><a class="nav-link active"
 						href="contact_us.jsp">Contact Us</a></li>
@@ -42,7 +44,7 @@
 				} else {
 				%>
 				<div class="d-flex">
-					<a class="btn btn-success" href="home.jsp">Hi, <%=user%></a> <a
+					<a class="btn btn-success" href="edit_profile.jsp">Hi, <%=user%></a> <a
 						class="btn btn-danger ms-3" href="logout">Logout</a>
 				</div>
 				<%}%>

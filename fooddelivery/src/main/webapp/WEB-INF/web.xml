@@ -14,6 +14,8 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>SignupServlet</servlet-name>
+    <url-pattern>/updatePassword</url-pattern>
+    <url-pattern>/editProfile</url-pattern>
     <url-pattern>/signup</url-pattern>
   </servlet-mapping>
   <servlet>
@@ -81,10 +83,12 @@
   <filter-mapping>
     <filter-name>UserFilter</filter-name>
     <url-pattern>/home.jsp</url-pattern>
-  </filter-mapping>
-  <filter-mapping>
-    <filter-name>UserFilter</filter-name>
+    <url-pattern>/searchHome.jsp</url-pattern>
     <url-pattern>/my_cart.jsp</url-pattern>
+    <url-pattern>/my_orders.jsp</url-pattern>
+    <url-pattern>/checkout.jsp</url-pattern>
+    <url-pattern>/view_order.jsp</url-pattern>
+    <url-pattern>/update_password.jsp</url-pattern>
   </filter-mapping>
   <servlet>
     <description></description>

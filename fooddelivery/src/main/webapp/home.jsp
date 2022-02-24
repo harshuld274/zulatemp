@@ -38,6 +38,15 @@
 	session.removeAttribute("order-success");
 	}
 	%>
+	<%
+	String editSuccess = (String) session.getAttribute("edit-succ");
+	if (editSuccess != null) {
+	%>
+	<p><%=editSuccess%></p>
+	<%
+	session.removeAttribute("edit-succ");
+	}
+	%>
 	
 	<br>
 	<div class="container">
