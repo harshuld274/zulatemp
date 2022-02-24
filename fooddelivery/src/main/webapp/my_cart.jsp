@@ -12,7 +12,7 @@
 </head>
 <body>
 	<%@include file="components/navbar.jsp"%>
-<%
+	<%
 	String fail2 = (String) session.getAttribute("quantity-exceed-fail");
 	System.out.println(fail2 + " fail2 - home");
 	if (fail2 != null) {
@@ -29,6 +29,15 @@
 	<p><%=cartMsg%></p>
 	<%
 	session.removeAttribute("cart-msg");
+	}
+	%>
+	<%
+	String orderSuccess = (String) session.getAttribute("order-fail");
+	if (orderSuccess != null) {
+	%>
+	<p><%=orderSuccess%></p>
+	<%
+	session.removeAttribute("order-fail");
 	}
 	%>
 	<div class="container">
@@ -54,19 +63,19 @@
 				%>
 				<form method="post" action="deleteFromCart">
 					<div>
-						<% int id = tb.getIdFromName(tb.getFood()); %>
+						<%
+						int id = tb.getIdFromName(tb.getFood());
+						%>
 						<input type="hidden" value=<%=id%> name="id">
 						<tr class="align-middle">
 							<th scope="row"><%=sno++%></th>
 							<td><%=tb.getFood()%></td>
 							<td><%=tb.getPrice()%></td>
-							<td><a href="incQuan?id=<%= id %>" class="btn"> <i
+							<td><a href="incQuan?id=<%=id%>" class="btn"> <i
 									class="fa fa-plus"></i>
-							</a> <%=tb.getQuantity()%><a href="decQuan?id=<%= id %>" class="btn"><i
+							</a> <%=tb.getQuantity()%><a href="decQuan?id=<%=id%>" class="btn"><i
 									class="fa fa-minus"></i> </a></td>
 							<td><%=tb.getTotal()%></td>
-							<!-- 							<td><input type="number" name="quantity" -->
-							<!-- 								placeholder="Quantity" min="1" required></td> -->
 							<td>
 								<button type="submit" class="btn btn-primary">Remove</button>
 							</td>
@@ -81,7 +90,9 @@
 		<p>
 			Total
 			<%=total%></p>
-
+			<%if (total > 0) { %>
+				<a href="checkout.jsp" class="btn btn-success">Proceed to Checkout</a>
+			<%}%>
 	</div>
 </body>
 </html>

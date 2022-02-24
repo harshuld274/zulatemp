@@ -9,10 +9,6 @@
 </head>
 <body>
 	<%@include file="navbar_admin.jsp"%>
-	<%
-	String user = (String) session.getAttribute("email");
-	System.out.println("user navbar-" + user);
-	%>
 	<div class="container-fluid py-5 h-100"
 		style="background-color: #c6bec7;">
 		<div class="row d-flex justify-content-center align-items-center">

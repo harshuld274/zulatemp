@@ -22,36 +22,16 @@
 					<li class="nav-item"><a class="nav-link active"
 						aria-current="page" href="all_items.jsp">View All Items</a></li>
 					<li class="nav-item active"><a class="nav-link active"
+						href="all_orders.jsp">View All Orders</a></li>
+					<li class="nav-item active"><a class="nav-link active"
 						href="add_item.jsp">Add Item</a></li>
-					<!-- 					<li class="nav-item active"><a class="nav-link active" -->
-					<!-- 						href="edit_item.jsp">Edit Item</a></li> -->
 					<!-- 					<li class="nav-item active"><a class="nav-link active" -->
 					<!-- 						href="delete_item.jsp">Delete Item</a></li> -->
 				</ul>
-				<%-- <%
-				String user = (String) session.getAttribute("email");
-				System.out.println("user -" + user);
-				if (user == null) {
-				%>
-				<div class="d-flex">
-					<a class="btn btn-success" href="login.jsp">Login</a> <a
-						class="btn btn-danger ms-3" href="signup.jsp">Sign Up</a>
-				</div>
-				<%
-				} else {
-				%>
-				<div class="d-flex">
-					<a class="btn btn-success" href="home.jsp">Hi, <%=user%></a> <a
-						class="btn btn-danger ms-3" href="logout">Logout</a>
-				</div>
-				<%}%> --%>
-
-
 				<div class="d-flex">
 					<a class="btn btn-success" href="home.jsp">Hi, <%=(String) session.getAttribute("email")%></a>
 					<a class="btn btn-danger ms-3" href="../logout">Logout</a>
 				</div>
-
 			</div>
 		</div>
 	</nav>

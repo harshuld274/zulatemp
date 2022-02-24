@@ -22,7 +22,7 @@
 		<p class="text-success"><%=editItemSucc%></p>
 
 		<%
-		session.removeAttribute("delete-item-succ");
+		session.removeAttribute("edit-item-succ");
 		}
 		%>
 		

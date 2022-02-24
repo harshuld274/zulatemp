@@ -13,7 +13,6 @@
 	<%@include file="components/navbar.jsp"%>
 	<%
 	String fail = (String) session.getAttribute("signup-fail2");
-	System.out.println(fail + " fail - home");
 	if (fail != null) {
 	%>
 	<p><%=fail%></p>
@@ -23,12 +22,20 @@
 	%>
 	<%
 	String fail2 = (String) session.getAttribute("quantity-exceed-fail");
-	System.out.println(fail2 + " fail2 - home");
 	if (fail2 != null) {
 	%>
 	<p><%=fail2%></p>
 	<%
 	session.removeAttribute("quantity-exceed-fail");
+	}
+	%>
+	<%
+	String orderSuccess = (String) session.getAttribute("order-success");
+	if (orderSuccess != null) {
+	%>
+	<p><%=orderSuccess%></p>
+	<%
+	session.removeAttribute("order-success");
 	}
 	%>
 	

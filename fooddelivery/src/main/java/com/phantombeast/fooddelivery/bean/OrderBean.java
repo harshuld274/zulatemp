@@ -14,7 +14,7 @@ public class OrderBean {
 	}
 
 	public enum Status {
-		PENDING, DELIVERED, CANCELLED
+		PENDING, DELIVERED, CANCELLED, REJECTED
 	}
 
 	private int id;
@@ -29,6 +29,19 @@ public class OrderBean {
 
 	public OrderBean() {
 		super();
+	}
+
+	public OrderBean(String email, CartBean cart, float amount, String address, String mobile, Timestamp time,
+			Mode mode, Status status) {
+		super();
+		this.email = email;
+		this.cart = cart;
+		this.amount = amount;
+		this.address = address;
+		this.mobile = mobile;
+		this.time = time;
+		this.mode = mode;
+		this.status = status;
 	}
 
 	public int getId() {
@@ -112,25 +125,31 @@ public class OrderBean {
 		return cb;
 	}
 
-	public static Object toJSON(CartBean cb) throws JsonMappingException, JsonProcessingException {
+	public static String toJSON(CartBean cb) throws JsonMappingException, JsonProcessingException {
 		Object obj = null;
 		if (cb != null) {
 			ObjectMapper objectMapper = new ObjectMapper();
-			String json = objectMapper.writeValueAsString(cb.getQuantities());
+			String json = objectMapper.writeValueAsString(cb.toString());
 			obj = objectMapper.readValue(json, Object.class);
 		}
-		return obj;
+		return obj.toString();
 	}
 
-	public static Timestamp fromTimestamp(Object obj) {
-		return Timestamp.valueOf(obj.toString());
-	}
-
-	public static Mode toEnum(String string) {
+	public static Mode toMode(String string) {
 		return Mode.valueOf(string);
 	}
 
 	public static Status toStatus(String string) {
 		return Status.valueOf(string);
+	}
+
+	@Override
+	public String toString() {
+		return "OrderBean [id=" + id + ", email=" + email + ", cart=" + cart + ", amount=" + amount + ", address="
+				+ address + ", mobile=" + mobile + ", time=" + time + ", mode=" + mode + ", status=" + status + "]";
+	}
+
+	public boolean isValid() {
+		return true;
 	}
 }

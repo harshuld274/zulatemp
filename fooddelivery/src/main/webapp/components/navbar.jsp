@@ -24,13 +24,14 @@
 					<li class="nav-item active"><a class="nav-link active"
 						href="my_cart.jsp">My Cart</a></li>
 					<li class="nav-item active"><a class="nav-link active"
+						href="my_orders.jsp">My Orders</a></li>
+					<li class="nav-item active"><a class="nav-link active"
 						href="about.jsp">About</a></li>
 					<li class="nav-item active"><a class="nav-link active"
 						href="contact_us.jsp">Contact Us</a></li>
 				</ul>
 				<%
 				String user = (String) session.getAttribute("email");
-// 				System.out.println("user navbar-" + user);
 				if (user == null) {
 				%>
 				<div class="d-flex">

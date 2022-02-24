@@ -33,14 +33,14 @@ public class OrderDAO {
 		try {
 			ps = cn.prepareStatement(PLACE_ORDER_SQL);
 			ps.setString(1, ob.getEmail());
-			ps.setObject(2, OrderBean.toJSON(ob.getCart()));
+			ps.setString(2, OrderBean.toJSON(ob.getCart()));
 			ps.setFloat(3, ob.getAmount());
 			ps.setString(4, ob.getAddress());
 			ps.setString(5, ob.getMobile());
 			ps.setTimestamp(6, ob.getTime());
 			ps.setString(7, ob.getMode().name());
 			ps.setString(8, ob.getStatus().name());
-
+			System.out.println(ps.toString());
 			success = ps.executeUpdate() > 0;
 
 			ps.close();
@@ -65,13 +65,13 @@ public class OrderDAO {
 				ob.setId(rs.getInt(1));
 				ob.setEmail(rs.getString(2));
 
-				ob.setCart(OrderBean.fromJSON(rs.getObject(3)));
+				ob.setCart(OrderBean.fromJSON(rs.getString(3)));
 				ob.setAmount(rs.getFloat(4));
 				ob.setAddress(rs.getString(5));
 				ob.setMobile(rs.getString(6));
-				ob.setTime(OrderBean.fromTimestamp(rs.getObject(7)));
-				ob.setMode(OrderBean.toEnum(rs.getString(8)));
-				ob.setStatus(OrderBean.toStatus(rs.getString(8)));
+				ob.setTime(rs.getTimestamp(7));
+				ob.setMode(OrderBean.toMode(rs.getString(8)));
+				ob.setStatus(OrderBean.toStatus(rs.getString(9)));
 				foods.add(ob);
 			}
 
@@ -99,13 +99,13 @@ public class OrderDAO {
 				ob.setId(rs.getInt(1));
 				ob.setEmail(email);
 
-				ob.setCart(OrderBean.fromJSON(rs.getObject(3)));
+				ob.setCart(OrderBean.fromJSON(rs.getString(3)));
 				ob.setAmount(rs.getFloat(4));
 				ob.setAddress(rs.getString(5));
 				ob.setMobile(rs.getString(6));
-				ob.setTime(OrderBean.fromTimestamp(rs.getObject(7)));
-				ob.setMode(OrderBean.toEnum(rs.getString(8)));
-				ob.setStatus(OrderBean.toStatus(rs.getString(8)));
+				ob.setTime(rs.getTimestamp(7));
+				ob.setMode(OrderBean.toMode(rs.getString(8)));
+				ob.setStatus(OrderBean.toStatus(rs.getString(9)));
 				foods.add(ob);
 			}
 
@@ -131,13 +131,13 @@ public class OrderDAO {
 				ob.setId(rs.getInt(1));
 				ob.setEmail(rs.getString(2));
 
-				ob.setCart(OrderBean.fromJSON(rs.getObject(3)));
+				ob.setCart(OrderBean.fromJSON(rs.getString(3)));
 				ob.setAmount(rs.getFloat(4));
 				ob.setAddress(rs.getString(5));
 				ob.setMobile(rs.getString(6));
-				ob.setTime(OrderBean.fromTimestamp(rs.getObject(7)));
-				ob.setMode(OrderBean.toEnum(rs.getString(8)));
-				ob.setStatus(OrderBean.toStatus(rs.getString(8)));
+				ob.setTime(rs.getTimestamp(7));
+				ob.setMode(OrderBean.toMode(rs.getString(8)));
+				ob.setStatus(OrderBean.toStatus(rs.getString(9)));
 			}
 
 			ps.close();
@@ -149,13 +149,14 @@ public class OrderDAO {
 		return ob;
 	}
 
-	public boolean settleOrderById(int id) {
+	public boolean settleOrderById(int id, String status) {
 		boolean success = false;
 
 		PreparedStatement ps;
 		try {
 			ps = cn.prepareStatement(SETTLE_ORDER_BY_ID_SQL);
-			ps.setInt(1, id);
+			ps.setString(1, status);
+			ps.setInt(2, id);
 
 			success = ps.executeUpdate() > 0;
 

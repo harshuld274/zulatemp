@@ -46,8 +46,8 @@ public class FoodItemDAO {
 				fb.setQuantity(rs.getInt(5));
 			}
 
-			ps.close();
-			cn.close();
+//			ps.close();
+//			cn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -193,8 +193,8 @@ public class FoodItemDAO {
 			ps.setInt(1, id);
 			success = ps.executeUpdate() > 0;
 
-			ps.close();
-			cn.close();
+//			ps.close();
+//			cn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
