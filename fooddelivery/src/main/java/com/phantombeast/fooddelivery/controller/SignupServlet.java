@@ -33,6 +33,9 @@ public class SignupServlet extends HttpServlet {
 		case "/updatePassword":
 			updatePassword(request, response);
 			break;
+		default:
+			response.sendRedirect("welcome.jsp");
+			break;
 		}
 
 	}
