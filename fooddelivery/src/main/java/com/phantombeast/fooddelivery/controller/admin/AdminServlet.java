@@ -91,7 +91,7 @@ public class AdminServlet extends HttpServlet {
 			if (cartDAO.removeCart(name)) {
 				session.setAttribute("delete-item-succ", "Item successfully deleted");
 			} else {
-				System.out.println("Carts weren't removed. Server error");
+				System.out.println("Carts weren't removed. Nobody add this item in cart");
 			}
 		} else {
 			session.setAttribute("delete-item-fail", "Sorry.. Can't delete item");

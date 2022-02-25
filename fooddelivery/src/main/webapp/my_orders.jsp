@@ -15,6 +15,15 @@
 <body>
 	<%@include file="components/navbar.jsp"%>
 	<div class="container">
+		<%
+		String cancelMsg = (String) session.getAttribute("cancel-msg");
+		if (cancelMsg != null) {
+		%>
+		<p><%=cancelMsg%></p>
+		<%
+		session.removeAttribute("cancel-msg");
+		}
+		%>
 		<table class="table table-striped">
 			<thead>
 				<tr>
@@ -44,10 +53,14 @@
 					<%
 					Date date = new Date(order.getTime().getTime());
 					%>
-					<td><%=date%>
-					</td>
+					<td><%=date%></td>
 					<td><a href="view_order.jsp?id=<%=order.getId()%>"
-						class="btn btn-primary">View Order</a></td>
+						class="btn btn-primary">View Order</a> <%
+ if (order.getStatus().toString().equals("PENDING")) {
+ %> <a href="cancelOrder?id=<%=order.getId()%>" class="btn btn-danger">Cancel
+							Order</a> <%} else {%> <a href="#" class="btn btn-secondary">Cancel
+							Order</a></td>
+					<%}%>
 				</tr>
 				<%
 				}

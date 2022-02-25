@@ -25,7 +25,7 @@
 <body>
 	<%@include file="components/navbar.jsp"%>
 	<div class="container">
-		<form method="post" action="order">
+		<form method="post" action="placeOrder">
 			<table class="table table-striped">
 				<thead>
 					<tr>

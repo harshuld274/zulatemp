@@ -37,7 +37,6 @@ public class SignupServlet extends HttpServlet {
 			response.sendRedirect("welcome.jsp");
 			break;
 		}
-
 	}
 
 	private void updatePassword(HttpServletRequest request, HttpServletResponse response) throws IOException {

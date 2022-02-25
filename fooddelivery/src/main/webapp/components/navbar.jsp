@@ -7,6 +7,9 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<%
+	String user = (String) session.getAttribute("email");
+	%>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark p-3">
 		<div class="container-fluid">
 			<a class="navbar-brand" href="welcome.jsp">Zula</a>
@@ -19,6 +22,9 @@
 			<div class="collapse navbar-collapse" id="navbarScroll">
 				<ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll"
 					style="-bs-scroll-height: 100px;">
+					<%
+					if (user != null) {
+					%>
 					<li class="nav-item"><a class="nav-link active"
 						aria-current="page" href="home.jsp">Home</a></li>
 					<li class="nav-item active"><a class="nav-link active"
@@ -27,13 +33,16 @@
 						href="my_orders.jsp">My Orders</a></li>
 					<li class="nav-item active"><a class="nav-link active"
 						href="update_password.jsp">Change Password</a></li>
+					<%
+					}
+					%>
 					<li class="nav-item active"><a class="nav-link active"
 						href="about.jsp">About</a></li>
 					<li class="nav-item active"><a class="nav-link active"
 						href="contact_us.jsp">Contact Us</a></li>
 				</ul>
+
 				<%
-				String user = (String) session.getAttribute("email");
 				if (user == null) {
 				%>
 				<div class="d-flex">
@@ -44,8 +53,8 @@
 				} else {
 				%>
 				<div class="d-flex">
-					<a class="btn btn-success" href="edit_profile.jsp">Hi, <%=user%></a> <a
-						class="btn btn-danger ms-3" href="logout">Logout</a>
+					<a class="btn btn-success" href="edit_profile.jsp">Hi, <%=user%></a>
+					<a class="btn btn-danger ms-3" href="logout">Logout</a>
 				</div>
 				<%}%>
 			</div>

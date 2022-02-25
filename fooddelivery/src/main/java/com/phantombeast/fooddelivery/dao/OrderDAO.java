@@ -140,8 +140,8 @@ public class OrderDAO {
 				ob.setStatus(OrderBean.toStatus(rs.getString(9)));
 			}
 
-			ps.close();
-			cn.close();
+//			ps.close();
+//			cn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -159,7 +159,6 @@ public class OrderDAO {
 			ps.setInt(2, id);
 
 			success = ps.executeUpdate() > 0;
-
 			ps.close();
 			cn.close();
 		} catch (SQLException e) {

@@ -7,8 +7,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import com.phantombeast.fooddelivery.bean.FoodItemBean;
+import com.phantombeast.fooddelivery.bean.OrderBean;
 
 public class FoodItemDAO {
 
@@ -22,6 +25,7 @@ public class FoodItemDAO {
 	private static final String SELECT_FOODS_LIKE_SQL = "Select * from foods where name like ? and quantity > 0";
 	private static final String DELETE_FOOD_BY_ID_SQL = "Delete from foods where id = ?";
 	private static final String UPDATE_FOOD_BY_ID_SQL = "Update foods Set name = ?, price = ?, about = ?, quantity = ? where id = ?";
+	private static final String UPDATE_QUANTITY_BY_NAME_SQL = "Update foods Set quantity = ? where name = ?";
 
 	public FoodItemDAO(Connection cn) {
 		super();
@@ -226,6 +230,37 @@ public class FoodItemDAO {
 
 	public boolean isNewFood(String name) {
 		return selectFoodByName(name) == null;
+	}
+
+	public boolean updateQuantities(OrderBean ob) {
+		boolean success = true;
+
+		PreparedStatement ps = null;
+		FoodItemDAO foodDao = new FoodItemDAO(ConnectionProvider.getConnection());
+		try {
+			Map<String, Integer> map = ob.getCart().getQuantities();
+			int updatedQuantity;
+			for (Entry<String, Integer> entry : map.entrySet()) {
+				if (ob.getStatus().toString().equals("PENDING")) {
+					updatedQuantity = foodDao.selectFoodByName(entry.getKey()).getQuantity() - entry.getValue();
+				} else {
+					updatedQuantity = foodDao.selectFoodByName(entry.getKey()).getQuantity() + entry.getValue();
+				}
+
+				ps = cn.prepareStatement(UPDATE_QUANTITY_BY_NAME_SQL);
+				ps.setInt(1, updatedQuantity);
+				ps.setString(2, entry.getKey());
+				success &= (ps.executeUpdate() > 0);
+				System.out.println(success);
+			}
+
+			ps.close();
+			cn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return success;
 	}
 
 }
